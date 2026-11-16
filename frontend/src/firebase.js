@@ -1,11 +1,11 @@
 
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import {
   getAuth,
-  GoogleAuthProvider
+  GoogleAuthProvider,
 } from "firebase/auth";
 
-// Firebase configuration from frontend/.env
+// Firebase configuration from Vercel Environment Variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -13,41 +13,41 @@ const firebaseConfig = {
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Diagnostic: check whether environment variables loaded
-console.log("Firebase configuration check:", {
-  apiKeyLoaded: Boolean(firebaseConfig.apiKey),
-  authDomainLoaded: Boolean(firebaseConfig.authDomain),
-  projectIdLoaded: Boolean(firebaseConfig.projectId),
-  storageBucketLoaded: Boolean(firebaseConfig.storageBucket),
-  messagingSenderIdLoaded: Boolean(firebaseConfig.messagingSenderId),
-  appIdLoaded: Boolean(firebaseConfig.appId),
-});
+// Check required Firebase configuration
+const requiredConfig = [
+  "apiKey",
+  "authDomain",
+  "projectId",
+  "appId",
+];
 
-// Stop if required configuration is missing
-if (
-  !firebaseConfig.apiKey ||
-  !firebaseConfig.authDomain ||
-  !firebaseConfig.projectId ||
-  !firebaseConfig.appId
-) {
+const missingConfig = requiredConfig.filter(
+  (key) => !firebaseConfig[key]
+);
+
+if (missingConfig.length > 0) {
   throw new Error(
-    "Firebase configuration is missing. Check frontend/.env"
+    `Missing Firebase configuration: ${missingConfig.join(", ")}`
   );
 }
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only once
+const app = getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
 
-// Google authentication provider
+// Google Authentication Provider
 export const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
+// Export Firebase app
 export default app;
