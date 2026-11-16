@@ -1,0 +1,87 @@
+[
+  {
+    "id": "PM-KISAN",
+    "name": "PM-KISAN",
+    "category": "Agriculture",
+    "description": "Financial support scheme for eligible landholding farmer families.",
+    "benefits": [
+      "Rs. 6000 per year",
+      "Three equal installments of Rs. 2000"
+    ],
+    "eligibility": [
+      "Eligible landholding farmer families",
+      "Subject to official exclusion conditions"
+    ],
+    "documents": [
+      "Aadhaar details",
+      "Bank account details",
+      "Land records"
+    ],
+    "application_url": "https://pmkisan.gov.in/",
+    "source": "Official PM-KISAN portal"
+  },
+  {
+    "id": "POST-MATRIC-SCHOLARSHIP",
+    "name": "Post Matric Scholarship",
+    "category": "Education",
+    "description": "Scholarship assistance for eligible students studying after matriculation.",
+    "benefits": [
+      "Financial assistance according to applicable scholarship guidelines"
+    ],
+    "eligibility": [
+      "Depends on scholarship category",
+      "Income and course conditions may apply"
+    ],
+    "documents": [
+      "Student identity details",
+      "Previous marksheets",
+      "Income certificate if required",
+      "Category certificate if required",
+      "Bank details"
+    ],
+    "application_url": "https://scholarships.gov.in/",
+    "source": "National Scholarship Portal"
+  },
+  {
+    "id": "PM-MUDRA",
+    "name": "PM Mudra Yojana",
+    "category": "Business",
+    "description": "Provides loans through participating lenders to eligible micro and small business enterprises.",
+    "benefits": [
+      "Business loan support",
+      "Shishu, Kishore, Tarun and TarunPlus categories"
+    ],
+    "eligibility": [
+      "Depends on business requirements",
+      "Subject to lender assessment"
+    ],
+    "documents": [
+      "Identity proof",
+      "Address proof",
+      "Business details",
+      "Financial documents as required"
+    ],
+    "application_url": "https://www.mudra.org.in/",
+    "source": "Official MUDRA portal"
+  },
+  {
+    "id": "AYUSHMAN-BHARAT-PMJAY",
+    "name": "Ayushman Bharat PM-JAY",
+    "category": "Healthcare",
+    "description": "Government health assurance scheme for eligible beneficiary families.",
+    "benefits": [
+      "Cashless hospitalisation at empanelled hospitals, subject to scheme rules"
+    ],
+    "eligibility": [
+      "Depends on official beneficiary criteria",
+      "Beneficiary status should be checked through the official portal"
+    ],
+    "documents": [
+      "Identity proof",
+      "Beneficiary identification details",
+      "Other documents required by authorised centres"
+    ],
+    "application_url": "https://pmjay.gov.in/",
+    "source": "Official PM-JAY portal"
+  }
+]

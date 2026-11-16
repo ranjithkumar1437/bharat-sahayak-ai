@@ -1,0 +1,406 @@
+
+/* ==========================================
+   BHARAT SAHAYAK AI
+   APPLICATION GUIDE - PREMIUM GREEN UI
+========================================== */
+
+.application-guide-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 45px 30px 60px;
+
+  color: #102A25;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(8, 118, 83, 0.07),
+      transparent 30%
+    ),
+    #F3F7FB;
+
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+/* PAGE HEADER */
+
+.application-guide-heading {
+  max-width: 850px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.application-guide-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 8px 15px;
+  margin-bottom: 17px;
+
+  color: #087653;
+  background: #E5F5EF;
+  border: 1px solid #B7E4D1;
+  border-radius: 30px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.application-guide-heading h1 {
+  margin: 0 0 12px;
+
+  color: #087653;
+
+  font-size: clamp(32px, 5vw, 46px);
+  font-weight: 850;
+  letter-spacing: -1.5px;
+}
+
+.application-guide-heading p {
+  max-width: 650px;
+  margin: 0 auto;
+
+  color: #64748B;
+
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* MAIN GUIDE CARD */
+
+.application-guide-card {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto;
+  padding: 35px;
+
+  background: #FFFFFF;
+
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+
+  box-shadow: 0 15px 45px rgba(16, 42, 37, 0.06);
+}
+
+/* SCHEME SELECTOR */
+
+.application-scheme-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.application-scheme-selector label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #102A25;
+
+  font-size: 16px;
+  font-weight: 750;
+}
+
+.application-scheme-selector label svg {
+  color: #087653;
+}
+
+.application-scheme-selector select {
+  width: 100%;
+  min-height: 56px;
+
+  padding: 14px 16px;
+
+  color: #102A25;
+  background: #F8FAFC;
+
+  border: 1px solid #DCE5E0;
+  border-radius: 11px;
+
+  outline: none;
+
+  font-family: inherit;
+  font-size: 15px;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.application-scheme-selector select:focus {
+  border-color: #087653;
+  box-shadow: 0 0 0 3px rgba(8, 118, 83, 0.09);
+}
+
+/* STEPS HEADER */
+
+.application-steps-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin: 32px 0 24px;
+}
+
+.application-steps-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  color: #087653;
+  background: #E5F5EF;
+
+  border: 1px solid #B7E4D1;
+  border-radius: 13px;
+}
+
+.application-steps-heading h2 {
+  margin: 0 0 5px;
+
+  color: #087653;
+
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.application-steps-heading p {
+  margin: 0;
+
+  color: #64748B;
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* APPLICATION STEPS */
+
+.application-steps {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.application-steps li {
+  min-height: 64px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 15px 17px;
+
+  background: #F8FAFC;
+
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+
+  transition: all 0.25s ease;
+}
+
+.application-steps li:hover {
+  background: #F0FAF5;
+  border-color: #B7E4D1;
+
+  transform: translateX(4px);
+}
+
+/* STEP NUMBER */
+
+.application-step-number {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #FFFFFF;
+  background: #087653;
+
+  border-radius: 50%;
+
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* STEP TEXT */
+
+.application-step-text {
+  flex: 1;
+
+  color: #334155;
+
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.7;
+}
+
+/* CHECK ICON */
+
+.application-step-check {
+  flex-shrink: 0;
+  color: #0D9B70;
+}
+
+/* OFFICIAL WEBSITE */
+
+.application-official-section {
+  margin-top: 28px;
+}
+
+.application-official-button {
+  min-height: 50px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 13px 22px;
+
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #087653, #0D9B70);
+
+  border: none;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 750;
+  text-decoration: none;
+
+  transition: all 0.25s ease;
+}
+
+.application-official-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(8, 118, 83, 0.18);
+}
+
+/* IMPORTANT NOTE */
+
+.application-guide-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  margin-top: 28px;
+  padding: 16px;
+
+  color: #475569;
+  background: #E5F5EF;
+
+  border: 1px solid #D1EDE0;
+  border-radius: 11px;
+}
+
+.application-guide-note svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+
+  color: #087653;
+}
+
+.application-guide-note p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.application-guide-note strong {
+  color: #087653;
+}
+
+/* FOOTER */
+
+.application-guide-footer {
+  margin: 28px auto 0;
+
+  color: #64748B;
+
+  font-size: 12px;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  .application-guide-page {
+    padding: 30px 18px 45px;
+  }
+
+  .application-guide-card {
+    padding: 25px 20px;
+  }
+
+  .application-guide-heading h1 {
+    font-size: 34px;
+  }
+
+  .application-steps-heading h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .application-guide-page {
+    padding: 25px 12px 35px;
+  }
+
+  .application-guide-card {
+    padding: 20px 14px;
+    border-radius: 15px;
+  }
+
+  .application-guide-heading h1 {
+    font-size: 29px;
+  }
+
+  .application-guide-heading p {
+    font-size: 14px;
+  }
+
+  .application-steps li {
+    gap: 11px;
+    padding: 13px 11px;
+  }
+
+  .application-step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .application-step-text {
+    font-size: 12px;
+  }
+
+  .application-step-check {
+    width: 16px;
+    height: 16px;
+  }
+
+  .application-official-button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,586 @@
+
+/* =========================================
+   BHARAT SAHAYAK AI - ELIGIBILITY CHECKER
+   Green & White Dashboard UI
+========================================= */
+
+.eligibility-page {
+  position: relative;
+  display: flow-root;
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 65px 28px 60px;
+  color: #102a25;
+  background:
+    radial-gradient(circle at 8% 5%, rgba(16, 185, 129, 0.08), transparent 30%),
+    #f3f7fb;
+  font-family: "Inter", Arial, sans-serif;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.eligibility-page *,
+.eligibility-page *::before,
+.eligibility-page *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.eligibility-heading {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto 32px;
+  padding-top: 5px;
+  text-align: center;
+}
+
+.eligibility-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 9px 16px;
+  color: #087653;
+  background: #e5f5ef;
+  border: 1px solid #bdebd8;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.eligibility-heading h1 {
+  display: block;
+  margin: 0 0 10px;
+  color: #087653;
+  background: linear-gradient(90deg, #087653, #35c98b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.25;
+}
+
+.eligibility-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   MAIN FORM
+========================================= */
+
+.eligibility-form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(16, 42, 37, 0.06);
+}
+
+.eligibility-form-heading {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8eeeb;
+}
+
+.eligibility-form-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  color: #087653;
+  background: #e5f5ef;
+  border-radius: 13px;
+}
+
+.eligibility-form-heading h2 {
+  margin: 0 0 5px;
+  color: #102a25;
+  font-size: 19px;
+}
+
+.eligibility-form-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   FIELD GRID
+========================================= */
+
+.eligibility-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.eligibility-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.eligibility-field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.eligibility-field input,
+.eligibility-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 49px;
+  padding: 12px 15px;
+  color: #102a25;
+  background: #ffffff;
+  border: 1px solid #dce5e2;
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.eligibility-field input:focus,
+.eligibility-field select:focus {
+  border-color: #087653;
+  box-shadow: 0 0 0 3px rgba(8, 118, 83, 0.10);
+}
+
+.eligibility-field input::placeholder {
+  color: #94a3b8;
+}
+
+.eligibility-field select option {
+  color: #102a25;
+  background: #ffffff;
+}
+
+/* =========================================
+   FARMER QUESTIONS
+========================================= */
+
+.farmer-questions {
+  width: 100%;
+  margin-top: 3px;
+  padding: 25px 28px;
+  background: #f0faf5;
+  border: 1px solid #d5eee2;
+  border-radius: 16px;
+}
+
+.farmer-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 17px;
+}
+
+.farmer-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 45px;
+  height: 45px;
+  color: #087653;
+  background: #dff4e9;
+  border-radius: 12px;
+}
+
+.farmer-heading h2 {
+  margin: 0 0 6px;
+  color: #087653;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.farmer-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.farmer-question-list {
+  width: 100%;
+}
+
+.eligibility-question {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 225px;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #dcebe3;
+}
+
+.eligibility-question:last-child {
+  border-bottom: none;
+}
+
+.eligibility-question label {
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.eligibility-question select {
+  width: 100%;
+  min-width: 0;
+  min-height: 47px;
+  padding: 10px 13px;
+  color: #102a25;
+  background: #ffffff;
+  border: 1px solid #dce5e2;
+  border-radius: 10px;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.eligibility-question select:focus {
+  border-color: #087653;
+  box-shadow: 0 0 0 3px rgba(8, 118, 83, 0.09);
+}
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+.eligibility-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  color: #b42318;
+  background: #fff1f0;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.eligibility-error svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.eligibility-submit {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  margin: 3px 0 0;
+  padding: 14px 20px;
+  color: #ffffff;
+  background: linear-gradient(110deg, #087653, #0d9b70);
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 750;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.eligibility-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(110deg, #066346, #087653);
+  box-shadow: 0 8px 22px rgba(8, 118, 83, 0.20);
+}
+
+.eligibility-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.eligibility-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.eligibility-spinner {
+  animation: eligibility-spin 1s linear infinite;
+}
+
+@keyframes eligibility-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.eligibility-form-note {
+  margin: -12px 0 0;
+  color: #94a3b8;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   RESULTS SECTION
+========================================= */
+
+.eligibility-result {
+  width: 100%;
+  max-width: 980px;
+  margin: 30px auto 0;
+  padding: 28px;
+  color: #102a25;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(16, 42, 37, 0.05);
+}
+
+.result-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.result-heading > svg {
+  flex-shrink: 0;
+  color: #087653;
+}
+
+.result-heading h2 {
+  margin: 0 0 7px;
+  color: #087653;
+  font-size: 21px;
+}
+
+.result-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.assessment-list,
+.recommended-list {
+  margin-top: 24px;
+}
+
+.assessment-list > h3,
+.recommended-list > h3 {
+  margin-bottom: 15px;
+  color: #087653;
+  font-size: 18px;
+}
+
+/* =========================================
+   SCHEME RESULT CARDS
+========================================= */
+
+.scheme-result {
+  margin: 14px 0;
+  padding: 21px;
+  background: #f8fbfa;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #0d9b70;
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.scheme-result:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(16, 42, 37, 0.07);
+}
+
+.scheme-result h4 {
+  margin: 0 0 12px;
+  color: #087653;
+  font-size: 17px;
+}
+
+.scheme-result p {
+  margin: 8px 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.scheme-result p strong {
+  color: #334155;
+}
+
+/* =========================================
+   OFFICIAL WEBSITE LINKS
+========================================= */
+
+.scheme-result a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 11px 16px;
+  color: #087653;
+  background: #e5f5ef;
+  border: 1px solid #ccebdd;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.scheme-result a:hover {
+  color: #ffffff;
+  background: #087653;
+  border-color: #087653;
+}
+
+.no-matches {
+  padding: 16px;
+  color: #64748b;
+  background: #f8fbfa;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* =========================================
+   DISCLAIMER
+========================================= */
+
+.eligibility-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 16px;
+  color: #607c6b;
+  background: #eaf6ef;
+  border-left: 3px solid #087653;
+  border-radius: 9px;
+}
+
+.eligibility-disclaimer svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #087653;
+}
+
+.eligibility-disclaimer p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 850px) {
+  .eligibility-page {
+    padding: 50px 18px 45px;
+  }
+
+  .eligibility-form,
+  .eligibility-result {
+    padding: 24px;
+  }
+
+  .farmer-questions {
+    padding: 21px;
+  }
+}
+
+@media (max-width: 650px) {
+  .eligibility-page {
+    padding: 35px 13px 40px;
+  }
+
+  .eligibility-heading h1 {
+    font-size: 29px;
+  }
+
+  .eligibility-heading p {
+    font-size: 13px;
+  }
+
+  .eligibility-form,
+  .eligibility-result {
+    padding: 19px 15px;
+    border-radius: 14px;
+  }
+
+  .eligibility-fields {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .farmer-questions {
+    padding: 17px 14px;
+  }
+
+  .farmer-heading {
+    align-items: flex-start;
+  }
+
+  .farmer-heading h2 {
+    font-size: 17px;
+  }
+
+  .eligibility-question {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    padding: 14px 0;
+  }
+
+  .eligibility-question select {
+    max-width: 100%;
+  }
+
+  .eligibility-submit {
+    min-height: 50px;
+  }
+
+  .result-heading h2 {
+    font-size: 18px;
+  }
+
+  .scheme-result {
+    padding: 17px;
+  }
+}
