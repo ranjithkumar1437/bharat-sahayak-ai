@@ -4,8 +4,6 @@ uvicorn[standard]
 python-dotenv
 pydantic
 google-genai
-numpy
-sentence-transformers
 python-multipart
 pypdf
 pdf2image
