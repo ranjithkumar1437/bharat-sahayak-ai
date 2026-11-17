@@ -1,11 +1,10 @@
 
-import { initializeApp, getApps, getApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
-  GoogleAuthProvider,
+  GoogleAuthProvider
 } from "firebase/auth";
 
-// Firebase configuration from Vercel Environment Variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -16,38 +15,37 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Check required Firebase configuration
-const requiredConfig = [
-  "apiKey",
-  "authDomain",
-  "projectId",
-  "appId",
-];
+// Check whether configuration values are loaded.
+// Never print the actual API key.
+console.log("Firebase environment check:", {
+  apiKeyLoaded: Boolean(firebaseConfig.apiKey),
+  authDomainLoaded: Boolean(firebaseConfig.authDomain),
+  projectIdLoaded: Boolean(firebaseConfig.projectId),
+  storageBucketLoaded: Boolean(firebaseConfig.storageBucket),
+  messagingSenderIdLoaded: Boolean(firebaseConfig.messagingSenderId),
+  appIdLoaded: Boolean(firebaseConfig.appId),
+  measurementIdLoaded: Boolean(firebaseConfig.measurementId),
+});
 
-const missingConfig = requiredConfig.filter(
-  (key) => !firebaseConfig[key]
-);
-
-if (missingConfig.length > 0) {
+if (
+  !firebaseConfig.apiKey ||
+  !firebaseConfig.authDomain ||
+  !firebaseConfig.projectId ||
+  !firebaseConfig.appId
+) {
   throw new Error(
-    `Missing Firebase configuration: ${missingConfig.join(", ")}`
+    "Firebase configuration missing. Check frontend environment variables."
   );
 }
 
-// Initialize Firebase only once
-const app = getApps().length
-  ? getApp()
-  : initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-// Initialize Firebase Authentication
 export const auth = getAuth(app);
 
-// Google Authentication Provider
 export const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-// Export Firebase app
 export default app;
