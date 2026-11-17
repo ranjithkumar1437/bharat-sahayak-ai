@@ -1,5 +1,5 @@
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Search,
@@ -18,306 +18,41 @@ import {
   ShieldCheck,
   FileText,
   CheckCircle,
-  ClipboardList
+  LoaderCircle,
+  RefreshCw,
 } from "lucide-react";
+
+import { getSchemes } from "../services/api";
 
 import "./Schemes.css";
 
-const schemes = [
-  {
-    id: 1,
-    name: "PM-KISAN",
-    category: "Agriculture",
-    icon: Sprout,
-    color: "green",
-    description:
-      "Financial support for eligible farmer families across India.",
-    benefit: "Up to ₹6,000 per year, subject to eligibility",
-    location: "India-wide scheme",
-    details:
-      "Pradhan Mantri Kisan Samman Nidhi provides income support to eligible landholding farmer families through direct benefit transfers.",
-    eligibility: [
-      "Eligible landholding farmer families",
-      "Subject to applicable exclusion rules",
-      "Aadhaar and bank details may be required"
-    ],
-    documents: [
-      "Aadhaar card",
-      "Bank account details",
-      "Land ownership records"
-    ],
-    officialWebsite: "https://pmkisan.gov.in/"
-  },
-  {
-    id: 2,
-    name: "Post Matric Scholarship",
-    category: "Education",
-    icon: GraduationCap,
-    color: "blue",
-    description:
-      "Scholarship support for eligible students pursuing post-matric studies.",
-    benefit: "As per applicable scholarship rules",
-    location: "Central and state scholarship programmes",
-    details:
-      "Post Matric Scholarship programmes support eligible students from specified categories to continue their education after matriculation.",
-    eligibility: [
-      "Must satisfy the relevant category requirements",
-      "Must be enrolled in an eligible institution",
-      "Income limits and other conditions vary by scheme"
-    ],
-    documents: [
-      "Aadhaar card",
-      "Income certificate",
-      "Caste or category certificate, where applicable",
-      "Previous academic marksheets",
-      "Bank account details"
-    ],
-    officialWebsite: "https://scholarships.gov.in/"
-  },
-  {
-    id: 3,
-    name: "PM Mudra Yojana",
-    category: "Business",
-    icon: BriefcaseBusiness,
-    color: "orange",
-    description:
-      "Loans through participating financial institutions for eligible small businesses.",
-    benefit: "Loan support under applicable Mudra categories",
-    location: "Across India",
-    details:
-      "Pradhan Mantri Mudra Yojana supports eligible non-corporate, non-farm small and micro enterprises through participating lending institutions.",
-    eligibility: [
-      "Eligible small business or micro-enterprise",
-      "Applicant must satisfy lender requirements",
-      "Loan approval depends on the lending institution"
-    ],
-    documents: [
-      "Identity proof",
-      "Address proof",
-      "Business details",
-      "Bank account details",
-      "Business plan, if required"
-    ],
-    officialWebsite: "https://www.mudra.org.in/"
-  },
-  {
-    id: 4,
-    name: "Ayushman Bharat PM-JAY",
-    category: "Healthcare",
-    icon: HeartPulse,
-    color: "red",
-    description:
-      "Health coverage for eligible families under the government health assurance scheme.",
-    benefit: "Up to ₹5 lakh per eligible family per year",
-    location: "Participating hospitals across India",
-    details:
-      "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana provides cashless secondary and tertiary hospitalisation coverage to eligible beneficiary families.",
-    eligibility: [
-      "Eligibility is based on applicable government beneficiary records",
-      "Beneficiary identification is required",
-      "Coverage is subject to scheme rules"
-    ],
-    documents: [
-      "Aadhaar card or accepted identity document",
-      "Ration card or family identification details, where applicable",
-      "Beneficiary identification information"
-    ],
-    officialWebsite: "https://pmjay.gov.in/"
-  },
-  {
-    id: 5,
-    name: "PM Awas Yojana - Urban",
-    category: "Housing",
-    icon: House,
-    color: "blue",
-    description:
-      "Housing assistance for eligible urban households.",
-    benefit: "Assistance as per applicable scheme guidelines",
-    location: "Eligible urban areas",
-    details:
-      "Pradhan Mantri Awas Yojana - Urban supports eligible urban households through housing-related assistance under applicable programme components.",
-    eligibility: [
-      "Must meet applicable household eligibility conditions",
-      "Must satisfy scheme-specific income requirements",
-      "Other conditions depend on the programme component"
-    ],
-    documents: [
-      "Aadhaar card",
-      "Income proof",
-      "Address proof",
-      "Bank account details"
-    ],
-    officialWebsite: "https://pmaymis.gov.in/"
-  },
-  {
-    id: 6,
-    name: "PM Awas Yojana - Gramin",
-    category: "Housing",
-    icon: House,
-    color: "green",
-    description:
-      "Housing support for eligible rural households.",
-    benefit: "Financial assistance as per rural housing guidelines",
-    location: "Eligible rural areas",
-    details:
-      "PMAY-G aims to provide assistance for pucca houses to eligible rural households identified under applicable government criteria.",
-    eligibility: [
-      "Eligible rural household",
-      "Selection based on applicable government identification criteria",
-      "Subject to programme guidelines"
-    ],
-    documents: [
-      "Identity proof",
-      "Bank account details",
-      "Rural household identification details"
-    ],
-    officialWebsite: "https://pmayg.nic.in/"
-  },
-  {
-    id: 7,
-    name: "Mahatma Gandhi NREGA",
-    category: "Employment",
-    icon: Building2,
-    color: "orange",
-    description:
-      "Wage employment opportunities for eligible rural households.",
-    benefit: "Up to 100 days of guaranteed wage employment per rural household, subject to the Act",
-    location: "Rural India",
-    details:
-      "MGNREGA provides a legal guarantee of wage employment to rural households whose adult members volunteer for unskilled manual work.",
-    eligibility: [
-      "Adult members of rural households",
-      "Must be willing to undertake unskilled manual work",
-      "Job card and local registration requirements apply"
-    ],
-    documents: [
-      "Identity proof",
-      "Residence details",
-      "Household member details",
-      "Bank or post office account details"
-    ],
-    officialWebsite: "https://nrega.nic.in/"
-  },
-  {
-    id: 8,
-    name: "e-Shram",
-    category: "Employment",
-    icon: Users,
-    color: "blue",
-    description:
-      "National database and registration platform for eligible unorganised workers.",
-    benefit: "Access to applicable worker-related government services",
-    location: "Across India",
-    details:
-      "The e-Shram portal helps create a national database of unorganised workers and supports access to relevant government welfare services.",
-    eligibility: [
-      "Eligible unorganised workers",
-      "Must satisfy current registration conditions",
-      "Specific exclusions may apply"
-    ],
-    documents: [
-      "Aadhaar number",
-      "Mobile number linked to Aadhaar, where required",
-      "Bank account details"
-    ],
-    officialWebsite: "https://eshram.gov.in/"
-  },
-  {
-    id: 9,
-    name: "National Social Assistance Programme",
-    category: "Women",
-    icon: Users,
-    color: "red",
-    description:
-      "Social assistance programmes for eligible vulnerable citizens.",
-    benefit: "Assistance according to applicable pension programme rules",
-    location: "Across India",
-    details:
-      "NSAP provides social assistance through eligible pension and family benefit programmes for vulnerable sections of society.",
-    eligibility: [
-      "Must meet the relevant programme conditions",
-      "Age and household criteria may apply",
-      "State-specific implementation rules may apply"
-    ],
-    documents: [
-      "Age proof",
-      "Identity proof",
-      "Income or household eligibility documents",
-      "Bank account details"
-    ],
-    officialWebsite: "https://nsap.nic.in/"
-  },
-  {
-    id: 10,
-    name: "Beti Bachao Beti Padhao",
-    category: "Women",
-    icon: Users,
-    color: "orange",
-    description:
-      "An initiative promoting the protection, education and empowerment of girls.",
-    benefit: "Awareness and support initiatives under the programme",
-    location: "Across India",
-    details:
-      "Beti Bachao Beti Padhao works to address gender discrimination and promote the education and empowerment of girls.",
-    eligibility: [
-      "Programme activities are implemented through designated departments",
-      "Specific services depend on local programme implementation"
-    ],
-    documents: [
-      "Documents depend on the specific service being accessed"
-    ],
-    officialWebsite: "https://wcd.gov.in/"
-  },
-  {
-    id: 11,
-    name: "Skill India Digital Hub",
-    category: "Education",
-    icon: GraduationCap,
-    color: "green",
-    description:
-      "Discover skill development, training and learning opportunities.",
-    benefit: "Training and course opportunities as listed on the portal",
-    location: "Online platform",
-    details:
-      "Skill India Digital Hub provides access to skill development courses, training information and related learning opportunities.",
-    eligibility: [
-      "Course-specific eligibility conditions apply",
-      "Age and education requirements vary by course"
-    ],
-    documents: [
-      "Basic identity details",
-      "Education details, if required",
-      "Contact information"
-    ],
-    officialWebsite: "https://www.skillindiadigital.gov.in/"
-  },
-  {
-    id: 12,
-    name: "Stand-Up India",
-    category: "Business",
-    icon: BriefcaseBusiness,
-    color: "orange",
-    description:
-      "Bank loan support for eligible women and SC/ST entrepreneurs.",
-    benefit: "Eligible bank loans under applicable programme conditions",
-    location: "Participating bank branches across India",
-    details:
-      "Stand-Up India facilitates bank loans for eligible SC/ST and women entrepreneurs setting up greenfield enterprises.",
-    eligibility: [
-      "Eligible SC/ST or woman entrepreneur",
-      "Greenfield enterprise conditions apply",
-      "Applicant must satisfy bank requirements"
-    ],
-    documents: [
-      "Identity proof",
-      "Address proof",
-      "Business plan",
-      "Category certificate, where applicable",
-      "Financial documents required by the bank"
-    ],
-    officialWebsite: "https://www.standupmitra.in/"
-  }
-];
+// ==========================================
+// SCHEME ICONS
+// ==========================================
+
+const schemeIcons = {
+  Agriculture: Sprout,
+  Education: GraduationCap,
+  Business: BriefcaseBusiness,
+  Healthcare: HeartPulse,
+  Housing: House,
+  Women: Users,
+  Employment: Building2,
+};
+
+const schemeColors = {
+  Agriculture: "green",
+  Education: "blue",
+  Business: "orange",
+  Healthcare: "red",
+  Housing: "blue",
+  Women: "orange",
+  Employment: "green",
+};
+
+// ==========================================
+// CATEGORIES
+// ==========================================
 
 const categories = [
   "All",
@@ -327,41 +62,162 @@ const categories = [
   "Healthcare",
   "Housing",
   "Women",
-  "Employment"
+  "Employment",
 ];
+
+// ==========================================
+// NORMALIZE BACKEND SCHEME DATA
+// ==========================================
+
+const normalizeScheme = (scheme) => {
+  const benefits = Array.isArray(scheme.benefits)
+    ? scheme.benefits
+    : [];
+
+  return {
+    id: scheme.id,
+    name: scheme.name || "Government Scheme",
+    category: scheme.category || "Other",
+
+    icon:
+      schemeIcons[scheme.category] || ShieldCheck,
+
+    color:
+      schemeColors[scheme.category] || "green",
+
+    description:
+      scheme.description || "Scheme information is available.",
+
+    benefit:
+      scheme.benefit ||
+      benefits.join(" • ") ||
+      "Benefits depend on applicable government guidelines.",
+
+    location:
+      scheme.location || "India-wide scheme",
+
+    details:
+      scheme.details ||
+      scheme.description ||
+      "Please check the official government portal for more details.",
+
+    eligibility: Array.isArray(scheme.eligibility)
+      ? scheme.eligibility
+      : [],
+
+    documents: Array.isArray(scheme.documents)
+      ? scheme.documents
+      : [],
+
+    officialWebsite:
+      scheme.application_url ||
+      scheme.officialWebsite ||
+      "",
+  };
+};
+
+// ==========================================
+// MAIN SCHEMES COMPONENT
+// ==========================================
 
 function Schemes({ onNavigate }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedScheme, setSelectedScheme] = useState(null);
 
-  const filteredSchemes = useMemo(() => {
-    const search = searchTerm.trim().toLowerCase();
+  const [selectedCategory, setSelectedCategory] =
+    useState("All");
 
-    return schemes.filter((scheme) => {
-      const matchesCategory =
-        selectedCategory === "All" ||
-        scheme.category === selectedCategory;
+  const [selectedScheme, setSelectedScheme] =
+    useState(null);
 
-      const matchesSearch =
-        !search ||
-        scheme.name.toLowerCase().includes(search) ||
-        scheme.category.toLowerCase().includes(search) ||
-        scheme.description.toLowerCase().includes(search) ||
-        scheme.benefit.toLowerCase().includes(search);
+  const [schemes, setSchemes] = useState([]);
 
-      return matchesCategory && matchesSearch;
-    });
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
+
+  // ========================================
+  // FETCH SCHEMES FROM BACKEND
+  // ========================================
+
+  const fetchSchemes = async () => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const response = await getSchemes(
+        searchTerm,
+        selectedCategory
+      );
+
+      if (response?.success && Array.isArray(response.schemes)) {
+        const formattedSchemes =
+          response.schemes.map(normalizeScheme);
+
+        setSchemes(formattedSchemes);
+      } else {
+        setSchemes([]);
+        setError("Unable to load government schemes.");
+      }
+    } catch (err) {
+      console.error("Schemes loading error:", err);
+
+      setSchemes([]);
+
+      setError(
+        err.message ||
+          "Network Error. Please check your backend connection."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch when search or category changes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchSchemes();
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [searchTerm, selectedCategory]);
 
+  // ========================================
+  // OPEN OFFICIAL WEBSITE
+  // ========================================
+
   const openOfficialWebsite = (url) => {
-    if (!url || !/^https:\/\/[a-z0-9.-]+\.[a-z]{2,}/i.test(url)) {
-      window.alert("The official website link is not available.");
+    if (!url) {
+      window.alert(
+        "The official website link is not available."
+      );
       return;
     }
 
-    window.open(url, "_blank", "noopener,noreferrer");
+    try {
+      const validUrl = new URL(url);
+
+      if (
+        validUrl.protocol !== "https:" &&
+        validUrl.protocol !== "http:"
+      ) {
+        throw new Error("Invalid URL");
+      }
+
+      window.open(
+        validUrl.href,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    } catch {
+      window.alert(
+        "The official website link is invalid."
+      );
+    }
   };
+
+  // ========================================
+  // ELIGIBILITY NAVIGATION
+  // ========================================
 
   const handleEligibility = () => {
     setSelectedScheme(null);
@@ -370,22 +226,40 @@ function Schemes({ onNavigate }) {
       onNavigate("Eligibility Checker");
     } else {
       window.alert(
-        "Navigation is unavailable. Please use Eligibility Checker from the sidebar."
+        "Please select Eligibility Checker from the sidebar."
       );
     }
   };
 
+  // ========================================
+  // SCHEME ICON COMPONENT
+  // ========================================
+
   const SchemeIcon = ({ scheme }) => {
     const Icon = scheme.icon;
+
     return <Icon size={28} strokeWidth={2} />;
   };
+
+  // ========================================
+  // RESET FILTERS
+  // ========================================
+
+  const clearFilters = () => {
+    setSearchTerm("");
+    setSelectedCategory("All");
+  };
+
+  // ========================================
+  // UI
+  // ========================================
 
   return (
     <div className="schemes-page">
 
-      {/* Page heading */}
-      <div className="schemes-heading">
+      {/* PAGE HEADING */}
 
+      <div className="schemes-heading">
         <div>
           <span className="schemes-eyebrow">
             GOVERNMENT BENEFITS DISCOVERY
@@ -394,65 +268,126 @@ function Schemes({ onNavigate }) {
           <h1>Find Government Schemes</h1>
 
           <p>
-            Discover government programmes and benefits that may
-            match your needs.
+            Discover government programmes and benefits
+            that may match your needs.
           </p>
         </div>
 
         <div className="schemes-heading-icon">
           <ShieldCheck size={32} />
         </div>
-
       </div>
 
-      {/* Search */}
+      {/* SEARCH */}
+
       <div className="schemes-search">
         <Search size={21} />
 
         <input
           type="search"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) =>
+            setSearchTerm(e.target.value)
+          }
           placeholder="Search schemes by name, category or benefit..."
           aria-label="Search government schemes"
         />
       </div>
 
-      {/* Category filters */}
+      {/* CATEGORY FILTERS */}
+
       <div className="category-list">
         {categories.map((category) => (
           <button
             type="button"
             key={category}
             className={
-              selectedCategory === category ? "category-active" : ""
+              selectedCategory === category
+                ? "category-active"
+                : ""
             }
-            onClick={() => setSelectedCategory(category)}
+            onClick={() =>
+              setSelectedCategory(category)
+            }
           >
             {category}
           </button>
         ))}
       </div>
 
-      {/* Results heading */}
+      {/* RESULTS HEADING */}
+
       <div className="schemes-results">
         <div>
           <h2>Available Schemes</h2>
 
           <p>
-            {filteredSchemes.length} schemes displayed
+            {loading
+              ? "Loading schemes..."
+              : `${schemes.length} schemes displayed`}
           </p>
         </div>
+
+        <button
+          type="button"
+          onClick={fetchSchemes}
+          title="Refresh schemes"
+          aria-label="Refresh schemes"
+        >
+          <RefreshCw size={18} />
+        </button>
       </div>
 
-      {/* Scheme cards */}
-      {filteredSchemes.length > 0 ? (
+      {/* LOADING */}
+
+      {loading && (
+        <div className="no-schemes">
+          <LoaderCircle
+            size={38}
+            className="animate-spin"
+          />
+
+          <h3>Loading Government Schemes</h3>
+
+          <p>
+            Connecting to Bharat Sahayak AI backend...
+          </p>
+        </div>
+      )}
+
+      {/* ERROR */}
+
+      {!loading && error && (
+        <div className="no-schemes">
+          <ShieldCheck size={38} />
+
+          <h3>Unable to Load Schemes</h3>
+
+          <p>{error}</p>
+
+          <button
+            type="button"
+            className="scheme-button"
+            onClick={fetchSchemes}
+          >
+            Try Again
+            <RefreshCw size={17} />
+          </button>
+        </div>
+      )}
+
+      {/* SCHEME CARDS */}
+
+      {!loading && !error && schemes.length > 0 && (
         <div className="schemes-grid">
-
-          {filteredSchemes.map((scheme) => (
-            <article className="scheme-card" key={scheme.id}>
-
-              <div className={`scheme-icon ${scheme.color}`}>
+          {schemes.map((scheme) => (
+            <article
+              className="scheme-card"
+              key={scheme.id}
+            >
+              <div
+                className={`scheme-icon ${scheme.color}`}
+              >
                 <SchemeIcon scheme={scheme} />
               </div>
 
@@ -466,60 +401,70 @@ function Schemes({ onNavigate }) {
 
               <div className="scheme-benefit">
                 <IndianRupee size={17} />
+
                 <span>{scheme.benefit}</span>
               </div>
 
               <div className="scheme-location">
                 <MapPin size={17} />
+
                 <span>{scheme.location}</span>
               </div>
 
               <button
                 type="button"
                 className="scheme-button"
-                onClick={() => setSelectedScheme(scheme)}
+                onClick={() =>
+                  setSelectedScheme(scheme)
+                }
               >
                 View Details
                 <ArrowRight size={18} />
               </button>
-
             </article>
           ))}
-
-        </div>
-      ) : (
-        <div className="no-schemes">
-          <Search size={35} />
-
-          <h3>No schemes found</h3>
-
-          <p>
-            Try another search term or choose a different category.
-          </p>
-
-          <button
-            type="button"
-            className="scheme-button"
-            onClick={() => {
-              setSearchTerm("");
-              setSelectedCategory("All");
-            }}
-          >
-            Clear Filters
-          </button>
         </div>
       )}
 
-      {/* Disclaimer */}
+      {/* NO RESULTS */}
+
+      {!loading &&
+        !error &&
+        schemes.length === 0 && (
+          <div className="no-schemes">
+            <Search size={35} />
+
+            <h3>No Schemes Found</h3>
+
+            <p>
+              Try another search term or choose a
+              different category.
+            </p>
+
+            <button
+              type="button"
+              className="scheme-button"
+              onClick={clearFilters}
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
+
+      {/* DISCLAIMER */}
+
       <div className="scheme-disclaimer">
         <ShieldCheck size={18} />
-        Scheme information is provided for general guidance.
-        Benefits, eligibility conditions and application procedures
-        may change. Always verify the latest details on the official
-        government portal.
+
+        Scheme information is provided for general
+        guidance. Benefits, eligibility conditions and
+        application procedures may change. Always verify
+        the latest details on the official government
+        portal.
       </div>
 
-      {/* Scheme details modal */}
+      {/* SCHEME DETAILS MODAL */}
+
       {selectedScheme && (
         <div
           className="scheme-modal-overlay"
@@ -535,9 +480,9 @@ function Schemes({ onNavigate }) {
             aria-modal="true"
             aria-labelledby="scheme-modal-title"
           >
+            {/* MODAL HEADER */}
 
             <div className="scheme-modal-header">
-
               <div>
                 <span className="scheme-category">
                   {selectedScheme.category}
@@ -551,82 +496,101 @@ function Schemes({ onNavigate }) {
               <button
                 type="button"
                 className="scheme-modal-close"
-                onClick={() => setSelectedScheme(null)}
+                onClick={() =>
+                  setSelectedScheme(null)
+                }
                 aria-label="Close scheme details"
               >
                 <X size={21} />
               </button>
-
             </div>
+
+            {/* DESCRIPTION */}
 
             <p className="scheme-modal-description">
               {selectedScheme.details}
             </p>
 
-            {/* Benefit */}
-            <div className="scheme-detail-section">
+            {/* BENEFITS */}
 
+            <div className="scheme-detail-section">
               <h3>
                 <IndianRupee size={19} />
                 Scheme Benefits
               </h3>
 
               <p>{selectedScheme.benefit}</p>
-
             </div>
 
-            {/* Eligibility */}
-            <div className="scheme-detail-section">
+            {/* ELIGIBILITY */}
 
+            <div className="scheme-detail-section">
               <h3>
                 <CheckCircle size={19} />
                 General Eligibility
               </h3>
 
-              <ul>
-                {selectedScheme.eligibility.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-
+              {selectedScheme.eligibility.length > 0 ? (
+                <ul>
+                  {selectedScheme.eligibility.map(
+                    (item, index) => (
+                      <li key={index}>{item}</li>
+                    )
+                  )}
+                </ul>
+              ) : (
+                <p>
+                  Check the official portal for
+                  eligibility conditions.
+                </p>
+              )}
             </div>
 
-            {/* Documents */}
-            <div className="scheme-detail-section">
+            {/* DOCUMENTS */}
 
+            <div className="scheme-detail-section">
               <h3>
                 <FileText size={19} />
                 Documents to Prepare
               </h3>
 
-              <ul>
-                {selectedScheme.documents.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-
+              {selectedScheme.documents.length > 0 ? (
+                <ul>
+                  {selectedScheme.documents.map(
+                    (item, index) => (
+                      <li key={index}>{item}</li>
+                    )
+                  )}
+                </ul>
+              ) : (
+                <p>
+                  Required documents depend on the
+                  scheme guidelines.
+                </p>
+              )}
             </div>
 
-            {/* Location */}
-            <div className="scheme-detail-section">
+            {/* LOCATION */}
 
+            <div className="scheme-detail-section">
               <h3>
                 <MapPin size={19} />
                 Availability
               </h3>
 
               <p>{selectedScheme.location}</p>
-
             </div>
 
-            {/* Actions */}
-            <div className="scheme-modal-actions">
+            {/* ACTION BUTTONS */}
 
+            <div className="scheme-modal-actions">
               <button
                 type="button"
                 className="scheme-official-link"
                 onClick={() =>
-                  openOfficialWebsite(selectedScheme.officialWebsite)
+                  openOfficialWebsite(
+                    selectedScheme.officialWebsite
+                  )
                 }
               >
                 Open Official Website
@@ -641,20 +605,20 @@ function Schemes({ onNavigate }) {
                 Check Eligibility
                 <ArrowRight size={18} />
               </button>
-
             </div>
 
-            <p className="scheme-modal-note">
-              These details are for general information only.
-              Final eligibility and benefits are determined by the
-              concerned government department. Verify current rules
-              on the official website.
-            </p>
+            {/* NOTE */}
 
+            <p className="scheme-modal-note">
+              These details are for general information
+              only. Final eligibility and benefits are
+              determined by the concerned government
+              department. Verify current rules on the
+              official website.
+            </p>
           </div>
         </div>
       )}
-
     </div>
   );
 }

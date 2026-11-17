@@ -115,7 +115,7 @@ function AIAssistant() {
     window.speechSynthesis.speak(utterance);
   };
 
-  // Send message to Gemini AI
+  // Send message to AI
   const handleSend = async (text = input) => {
     const question = text.trim();
 
@@ -159,7 +159,7 @@ function AIAssistant() {
       speakAnswer(answer, answerIndex);
 
     } catch (err) {
-      console.error("Gemini Assistant Error:", err);
+      console.error("AI Assistant Error:", err);
 
       setError(
         err.message ||
@@ -293,7 +293,6 @@ function AIAssistant() {
 
             <div>
               <strong>Government Scheme Assistant</strong>
-              <p>Powered by Gemini AI</p>
             </div>
           </div>
 

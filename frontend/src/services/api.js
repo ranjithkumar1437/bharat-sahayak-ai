@@ -1,16 +1,26 @@
 
 import axios from "axios";
 
-// Backend API configuration
+// ==========================================
+// BACKEND API CONFIGURATION
+// ==========================================
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000",
+  baseURL:
+    import.meta.env.VITE_API_BASE_URL ||
+    "http://localhost:8000",
+
   timeout: 60000,
+
   headers: {
     Accept: "application/json",
   },
 });
 
-// Common API error handler
+// ==========================================
+// COMMON API ERROR HANDLER
+// ==========================================
+
 const handleApiError = (error) => {
   const message =
     error.response?.data?.detail ||
@@ -19,10 +29,14 @@ const handleApiError = (error) => {
     "Something went wrong. Please try again.";
 
   console.error("API Error:", message);
+
   throw new Error(message);
 };
 
-// Backend Health Check
+// ==========================================
+// BACKEND HEALTH CHECK
+// ==========================================
+
 export const checkBackend = async () => {
   try {
     const response = await API.get("/api/health");
@@ -32,10 +46,17 @@ export const checkBackend = async () => {
   }
 };
 
-// Document Agent - PDF, JPG, PNG Upload
-export const uploadDocument = async (file, onUploadProgress) => {
+// ==========================================
+// DOCUMENT AGENT - PDF, JPG, PNG UPLOAD
+// ==========================================
+
+export const uploadDocument = async (
+  file,
+  onUploadProgress
+) => {
   try {
     const formData = new FormData();
+
     formData.append("file", file);
 
     const response = await API.post(
@@ -60,7 +81,10 @@ export const uploadDocument = async (file, onUploadProgress) => {
   }
 };
 
-// Eligibility Agent
+// ==========================================
+// ELIGIBILITY AGENT
+// ==========================================
+
 export const checkEligibility = async (details) => {
   try {
     const response = await API.post(
@@ -74,7 +98,48 @@ export const checkEligibility = async (details) => {
   }
 };
 
-// AI Assistant - Gemini
+// ==========================================
+// GOVERNMENT SCHEMES - GET ALL / SEARCH
+// ==========================================
+
+export const getSchemes = async (
+  search = "",
+  category = "All"
+) => {
+  try {
+    const response = await API.get("/api/schemes/", {
+      params: {
+        search: search.trim(),
+        category,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+// ==========================================
+// GOVERNMENT SCHEMES - GET BY ID
+// ==========================================
+
+export const getSchemeById = async (schemeId) => {
+  try {
+    const response = await API.get(
+      `/api/schemes/${encodeURIComponent(schemeId)}`
+    );
+
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+  }
+};
+
+// ==========================================
+// AI ASSISTANT - GEMINI
+// ==========================================
+
 export const sendChatMessage = async (
   question,
   language = "English"
@@ -93,5 +158,9 @@ export const sendChatMessage = async (
     handleApiError(error);
   }
 };
+
+// ==========================================
+// DEFAULT API EXPORT
+// ==========================================
 
 export default API;

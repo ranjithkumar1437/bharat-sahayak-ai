@@ -1,13 +1,16 @@
+
 [
   {
     "id": "PM-KISAN",
     "name": "PM-KISAN",
     "category": "Agriculture",
     "description": "Financial support scheme for eligible landholding farmer families.",
+    "details": "Pradhan Mantri Kisan Samman Nidhi provides income support to eligible landholding farmer families through direct benefit transfers.",
     "benefits": [
       "Rs. 6000 per year",
       "Three equal installments of Rs. 2000"
     ],
+    "location": "India-wide scheme",
     "eligibility": [
       "Eligible landholding farmer families",
       "Subject to official exclusion conditions"
@@ -25,12 +28,15 @@
     "name": "Post Matric Scholarship",
     "category": "Education",
     "description": "Scholarship assistance for eligible students studying after matriculation.",
+    "details": "Post Matric Scholarship programmes support eligible students from specified categories to continue their education after matriculation.",
     "benefits": [
       "Financial assistance according to applicable scholarship guidelines"
     ],
+    "location": "Central and state scholarship programmes",
     "eligibility": [
       "Depends on scholarship category",
-      "Income and course conditions may apply"
+      "Income and course conditions may apply",
+      "Must be enrolled in an eligible institution"
     ],
     "documents": [
       "Student identity details",
@@ -47,10 +53,12 @@
     "name": "PM Mudra Yojana",
     "category": "Business",
     "description": "Provides loans through participating lenders to eligible micro and small business enterprises.",
+    "details": "Pradhan Mantri Mudra Yojana supports eligible non-corporate, non-farm small and micro enterprises through participating lending institutions.",
     "benefits": [
       "Business loan support",
       "Shishu, Kishore, Tarun and TarunPlus categories"
     ],
+    "location": "Across India",
     "eligibility": [
       "Depends on business requirements",
       "Subject to lender assessment"
@@ -69,9 +77,11 @@
     "name": "Ayushman Bharat PM-JAY",
     "category": "Healthcare",
     "description": "Government health assurance scheme for eligible beneficiary families.",
+    "details": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana provides cashless secondary and tertiary hospitalisation coverage to eligible beneficiary families.",
     "benefits": [
       "Cashless hospitalisation at empanelled hospitals, subject to scheme rules"
     ],
+    "location": "Participating hospitals across India",
     "eligibility": [
       "Depends on official beneficiary criteria",
       "Beneficiary status should be checked through the official portal"
@@ -83,5 +93,190 @@
     ],
     "application_url": "https://pmjay.gov.in/",
     "source": "Official PM-JAY portal"
+  },
+  {
+    "id": "PMAY-URBAN",
+    "name": "PM Awas Yojana - Urban",
+    "category": "Housing",
+    "description": "Housing assistance for eligible urban households.",
+    "details": "Pradhan Mantri Awas Yojana - Urban supports eligible urban households through housing-related assistance under applicable programme components.",
+    "benefits": [
+      "Assistance as per applicable scheme guidelines"
+    ],
+    "location": "Eligible urban areas",
+    "eligibility": [
+      "Must meet applicable household eligibility conditions",
+      "Must satisfy scheme-specific income requirements",
+      "Other conditions depend on the programme component"
+    ],
+    "documents": [
+      "Aadhaar card",
+      "Income proof",
+      "Address proof",
+      "Bank account details"
+    ],
+    "application_url": "https://pmaymis.gov.in/",
+    "source": "PMAY-Urban portal"
+  },
+  {
+    "id": "PMAY-GRAMIN",
+    "name": "PM Awas Yojana - Gramin",
+    "category": "Housing",
+    "description": "Housing support for eligible rural households.",
+    "details": "PMAY-G aims to provide assistance for pucca houses to eligible rural households identified under applicable government criteria.",
+    "benefits": [
+      "Financial assistance as per rural housing guidelines"
+    ],
+    "location": "Eligible rural areas",
+    "eligibility": [
+      "Eligible rural household",
+      "Selection based on applicable government identification criteria",
+      "Subject to programme guidelines"
+    ],
+    "documents": [
+      "Identity proof",
+      "Bank account details",
+      "Rural household identification details"
+    ],
+    "application_url": "https://pmayg.nic.in/",
+    "source": "PMAY-Gramin portal"
+  },
+  {
+    "id": "MGNREGA",
+    "name": "Mahatma Gandhi NREGA",
+    "category": "Employment",
+    "description": "Wage employment opportunities for eligible rural households.",
+    "details": "MGNREGA provides a legal guarantee of wage employment to rural households whose adult members volunteer for unskilled manual work.",
+    "benefits": [
+      "Up to 100 days of guaranteed wage employment per rural household, subject to the Act"
+    ],
+    "location": "Rural India",
+    "eligibility": [
+      "Adult members of rural households",
+      "Must be willing to undertake unskilled manual work",
+      "Job card and local registration requirements apply"
+    ],
+    "documents": [
+      "Identity proof",
+      "Residence details",
+      "Household member details",
+      "Bank or post office account details"
+    ],
+    "application_url": "https://nrega.nic.in/",
+    "source": "MGNREGA portal"
+  },
+  {
+    "id": "E-SHRAM",
+    "name": "e-Shram",
+    "category": "Employment",
+    "description": "National database and registration platform for eligible unorganised workers.",
+    "details": "The e-Shram portal helps create a national database of unorganised workers and supports access to relevant government welfare services.",
+    "benefits": [
+      "Access to applicable worker-related government services"
+    ],
+    "location": "Across India",
+    "eligibility": [
+      "Eligible unorganised workers",
+      "Must satisfy current registration conditions",
+      "Specific exclusions may apply"
+    ],
+    "documents": [
+      "Aadhaar number",
+      "Mobile number linked to Aadhaar, where required",
+      "Bank account details"
+    ],
+    "application_url": "https://eshram.gov.in/",
+    "source": "e-Shram portal"
+  },
+  {
+    "id": "NSAP",
+    "name": "National Social Assistance Programme",
+    "category": "Women",
+    "description": "Social assistance programmes for eligible vulnerable citizens.",
+    "details": "NSAP provides social assistance through eligible pension and family benefit programmes for vulnerable sections of society.",
+    "benefits": [
+      "Assistance according to applicable pension programme rules"
+    ],
+    "location": "Across India",
+    "eligibility": [
+      "Must meet the relevant programme conditions",
+      "Age and household criteria may apply",
+      "State-specific implementation rules may apply"
+    ],
+    "documents": [
+      "Age proof",
+      "Identity proof",
+      "Income or household eligibility documents",
+      "Bank account details"
+    ],
+    "application_url": "https://nsap.nic.in/",
+    "source": "National Social Assistance Programme portal"
+  },
+  {
+    "id": "BETI-BACHAO-BETI-PADHAO",
+    "name": "Beti Bachao Beti Padhao",
+    "category": "Women",
+    "description": "An initiative promoting the protection, education and empowerment of girls.",
+    "details": "Beti Bachao Beti Padhao works to address gender discrimination and promote the education and empowerment of girls.",
+    "benefits": [
+      "Awareness and support initiatives under the programme"
+    ],
+    "location": "Across India",
+    "eligibility": [
+      "Programme activities are implemented through designated departments",
+      "Specific services depend on local programme implementation"
+    ],
+    "documents": [
+      "Documents depend on the specific service being accessed"
+    ],
+    "application_url": "https://wcd.gov.in/",
+    "source": "Ministry of Women and Child Development"
+  },
+  {
+    "id": "SKILL-INDIA-DIGITAL-HUB",
+    "name": "Skill India Digital Hub",
+    "category": "Education",
+    "description": "Discover skill development, training and learning opportunities.",
+    "details": "Skill India Digital Hub provides access to skill development courses, training information and related learning opportunities.",
+    "benefits": [
+      "Training and course opportunities as listed on the portal"
+    ],
+    "location": "Online platform",
+    "eligibility": [
+      "Course-specific eligibility conditions apply",
+      "Age and education requirements vary by course"
+    ],
+    "documents": [
+      "Basic identity details",
+      "Education details, if required",
+      "Contact information"
+    ],
+    "application_url": "https://www.skillindiadigital.gov.in/",
+    "source": "Skill India Digital Hub"
+  },
+  {
+    "id": "STAND-UP-INDIA",
+    "name": "Stand-Up India",
+    "category": "Business",
+    "description": "Bank loan support for eligible women and SC/ST entrepreneurs.",
+    "details": "Stand-Up India facilitates bank loans for eligible SC/ST and women entrepreneurs setting up greenfield enterprises.",
+    "benefits": [
+      "Eligible bank loans under applicable programme conditions"
+    ],
+    "location": "Participating bank branches across India",
+    "eligibility": [
+      "Eligible SC/ST or woman entrepreneur",
+      "Greenfield enterprise conditions apply",
+      "Applicant must satisfy bank requirements"
+    ],
+    "documents": [
+      "Identity proof",
+      "Address proof",
+      "Business plan",
+      "Category certificate, where applicable",
+      "Financial documents required by the bank"
+    ],
+    "application_url": "https://www.standupmitra.in/",
+    "source": "Stand-Up India portal"
   }
 ]

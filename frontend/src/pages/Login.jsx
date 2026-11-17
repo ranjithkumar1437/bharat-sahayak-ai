@@ -1,365 +1,252 @@
 
-import React, { useState } from "react";
-import {
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail
-} from "firebase/auth";
-
-import { auth, googleProvider } from "../firebase";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
 
 import {
-  Landmark,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
   ShieldCheck,
-  LoaderCircle
+  Search,
+  ArrowRight,
+  LoaderCircle,
+  CheckCircle2,
 } from "lucide-react";
 
+import { auth, googleProvider } from "../firebase";
+import loginBg from "../assets/login-bg.png";
 import "./Login.css";
 
-export default function Login() {
+function Login() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const [isRegister, setIsRegister] = useState(false);
 
-  // EMAIL AND PASSWORD LOGIN / REGISTRATION
-  const handleEmailLogin = async (e) => {
-    e.preventDefault();
-
-    setError("");
-    setMessage("");
-
-    if (!email.trim() || !password) {
-      setError("Please enter your email address and password.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must contain at least 6 characters.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      if (isRegister) {
-        await createUserWithEmailAndPassword(
-          auth,
-          email.trim(),
-          password
-        );
-      } else {
-        await signInWithEmailAndPassword(
-          auth,
-          email.trim(),
-          password
-        );
-      }
-
-      navigate("/", { replace: true });
-
-    } catch (err) {
-      console.error("Email authentication error:", err);
-
-      const errorMessages = {
-        "auth/invalid-email": "Please enter a valid email address.",
-        "auth/user-not-found": "No account found with this email.",
-        "auth/wrong-password": "Incorrect password. Please try again.",
-        "auth/invalid-credential": "Invalid email or password.",
-        "auth/email-already-in-use": "This email is already registered.",
-        "auth/weak-password": "Please choose a stronger password.",
-        "auth/too-many-requests": "Too many attempts. Please try again later.",
-        "auth/network-request-failed": "Network error. Check your internet connection.",
-        "auth/operation-not-allowed": "Enable Email/Password sign-in in Firebase Authentication."
-      };
-
-      setError(
-        errorMessages[err.code] ||
-        err.message ||
-        "Authentication failed. Please try again."
-      );
-
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // GOOGLE LOGIN
+  // Firebase Google Authentication
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
       setError("");
-      setMessage("");
 
-      const result = await signInWithPopup(auth, googleProvider);
-
-      console.log("Logged in user:", result.user.email);
-
-      navigate("/", { replace: true });
-
-    } catch (err) {
-      console.error("Google login error:", err);
-
-      setError(
-        err.message || "Google login failed. Please try again."
+      const result = await signInWithPopup(
+        auth,
+        googleProvider
       );
 
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // FORGOT PASSWORD
-  const handleForgotPassword = async () => {
-    setError("");
-    setMessage("");
-
-    if (!email.trim()) {
-      setError("Please enter your email address first.");
-      return;
-    }
-
-    try {
-      setLoading(true);
-
-      await sendPasswordResetEmail(auth, email.trim());
-
-      setMessage("Password reset link sent. Please check your email.");
-
+      if (result.user) {
+        navigate("/");
+      }
     } catch (err) {
-      console.error("Password reset error:", err);
+      console.error("Google Login Error:", err);
 
-      const resetErrors = {
-        "auth/invalid-email": "Please enter a valid email address.",
-        "auth/user-not-found": "No account found with this email.",
-        "auth/too-many-requests": "Too many attempts. Try again later."
-      };
-
-      setError(
-        resetErrors[err.code] ||
-        err.message ||
-        "Unable to send password reset email."
-      );
-
+      if (err.code === "auth/popup-closed-by-user") {
+        setError("Login popup was closed. Please try again.");
+      } else if (err.code === "auth/unauthorized-domain") {
+        setError(
+          "This website domain is not authorized in Firebase."
+        );
+      } else if (err.code === "auth/popup-blocked") {
+        setError(
+          "Your browser blocked the login popup. Please allow popups."
+        );
+      } else if (err.code === "auth/network-request-failed") {
+        setError(
+          "Network error. Please check your internet connection."
+        );
+      } else {
+        setError(
+          err.message || "Unable to sign in. Please try again."
+        );
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-page">
+    <main className="login-page">
 
-      {/* GREEN HEADER */}
-      <header className="login-header">
+      {/* =================================
+          LEFT: INDIAN PARLIAMENT PHOTO
+      ================================== */}
 
-        <div className="login-header-brand">
-          <Landmark size={30} />
-          <span>Bharat Sahayak AI</span>
-        </div>
+      <section
+        className="login-visual"
+        style={{
+          backgroundImage: `url(${loginBg})`,
+        }}
+      >
+        <div className="visual-overlay" />
 
-        <h1>Your Digital Citizen Assistant</h1>
-
-        <p>
-          One platform. Smarter access to government services.
-        </p>
-
-      </header>
-
-      {/* LOGIN CONTENT */}
-      <main className="login-content">
-
-        <section className="login-card">
-
-          {/* WELCOME */}
-          <h2>
-            {isRegister ? "Create Your Account!" : "Welcome Back!"}
-          </h2>
-
-          <p className="login-subtitle">
-            {isRegister
-              ? "Register to access your digital citizen assistant."
-              : "Sign in to continue to your account."}
-          </p>
-
-          {/* EMAIL LOGIN FORM */}
-          <form
-            className="login-form"
-            onSubmit={handleEmailLogin}
-          >
-
-            {/* EMAIL */}
-            <div className="login-input-group">
-
-              <label htmlFor="login-email">
-                Email address
-              </label>
-
-              <div className="login-input-wrapper">
-                <Mail size={20} />
-
-                <input
-                  id="login-email"
-                  className="login-input"
-                  type="email"
-                  placeholder="Enter your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="email"
-                  required
-                />
-              </div>
-
-            </div>
-
-            {/* PASSWORD */}
-            <div className="login-input-group">
-
-              <label htmlFor="login-password">
-                Password
-              </label>
-
-              <div className="login-input-wrapper">
-                <Lock size={20} />
-
-                <input
-                  id="login-password"
-                  className="login-input"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete={
-                    isRegister ? "new-password" : "current-password"
-                  }
-                  required
-                />
-
-                <button
-                  type="button"
-                  className="login-password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  aria-label={showPassword ? "Hide password" : "Show password"}
-                >
-                  {showPassword ? (
-                    <EyeOff size={19} />
-                  ) : (
-                    <Eye size={19} />
-                  )}
-                </button>
-
-              </div>
-
-            </div>
-
-            {/* FORGOT PASSWORD */}
-            {!isRegister && (
-              <button
-                type="button"
-                className="login-forgot-password"
-                onClick={handleForgotPassword}
-                disabled={loading}
-              >
-                Forgot password?
-              </button>
-            )}
-
-            {/* SUBMIT BUTTON */}
-            <button
-              type="submit"
-              className="login-submit-button"
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <LoaderCircle className="login-spinner" size={20} />
-                  Please wait...
-                </>
-              ) : (
-                isRegister ? "Create Account" : "Sign In"
-              )}
-            </button>
-
-          </form>
-
-          {/* SWITCH LOGIN / REGISTER */}
-          <div className="login-register-switch">
-            {isRegister
-              ? "Already have an account?"
-              : "Don't have an account?"}
-
-            <button
-              type="button"
-              onClick={() => {
-                setIsRegister(!isRegister);
-                setError("");
-                setMessage("");
-                setPassword("");
-              }}
-              disabled={loading}
-            >
-              {isRegister ? "Sign In" : "Create Account"}
-            </button>
+        {/* BRAND */}
+        <header className="visual-brand">
+          <div className="visual-brand-icon">
+            <ShieldCheck size={28} />
           </div>
 
-          {/* ERROR */}
+          <div className="visual-brand-text">
+            <h2>Bharat Sahayak AI</h2>
+            <p>AI Citizen Assistant</p>
+          </div>
+        </header>
+
+        {/* SMALL PHOTO CAPTION */}
+        <div className="photo-caption">
+          <div className="photo-caption-icon">
+            <CheckCircle2 size={19} />
+          </div>
+
+          <div>
+            <strong>
+              Government benefits for everyone.
+            </strong>
+
+            <p>
+              Empowering citizens through digital access.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      {/* =================================
+          RIGHT: LOGIN PANEL
+      ================================== */}
+
+      <section className="login-panel">
+
+        {/* TOP HEADER */}
+        <div className="login-top">
+
+          <div className="login-mobile-brand">
+            <ShieldCheck size={23} />
+            <span>Bharat Sahayak AI</span>
+          </div>
+
+          <span className="secure-label">
+            <ShieldCheck size={16} />
+            Secure Login
+          </span>
+
+        </div>
+
+        {/* LOGIN CARD */}
+        <div className="login-card">
+
+          {/* LOGO */}
+          <div className="login-logo">
+            <ShieldCheck size={37} />
+          </div>
+
+          {/* HEADING */}
+          <div className="login-heading">
+
+            <span className="login-welcome">
+              WELCOME TO
+            </span>
+
+            <h2>Bharat Sahayak AI</h2>
+
+            <p>
+              Your AI-powered Government Scheme Assistant
+            </p>
+
+          </div>
+
+          {/* FEATURES */}
+          <div className="login-features">
+
+            <div className="login-feature-item">
+              <Search size={17} />
+              <span>Discover</span>
+            </div>
+
+            <span className="feature-dot">•</span>
+
+            <div className="login-feature-item">
+              <CheckCircle2 size={17} />
+              <span>Check Eligibility</span>
+            </div>
+
+            <span className="feature-dot">•</span>
+
+            <div className="login-feature-item">
+              <ArrowRight size={17} />
+              <span>Get Guidance</span>
+            </div>
+
+          </div>
+
+          {/* DIVIDER */}
+          <div className="login-divider">
+            <span>Sign in to continue</span>
+          </div>
+
+          {/* ERROR MESSAGE */}
           {error && (
             <div className="login-error" role="alert">
               {error}
             </div>
           )}
 
-          {/* SUCCESS MESSAGE */}
-          {message && (
-            <div className="login-success" role="status">
-              {message}
-            </div>
-          )}
-
-          {/* DIVIDER */}
-          <div className="login-divider"></div>
-
-          {/* GOOGLE LOGIN */}
+          {/* GOOGLE LOGIN BUTTON */}
           <button
             type="button"
             className="google-login-button"
             onClick={handleGoogleLogin}
             disabled={loading}
           >
+
             {loading ? (
-              <LoaderCircle className="login-spinner" size={20} />
+              <LoaderCircle
+                className="login-spinner"
+                size={22}
+              />
             ) : (
-              <>
-                <span className="google-icon">G</span>
-                Continue with Google
-              </>
+              <span className="google-symbol">G</span>
             )}
+
+            <span>
+              {loading
+                ? "Signing in..."
+                : "Continue with Google"}
+            </span>
+
+            {!loading && (
+              <ArrowRight size={20} />
+            )}
+
           </button>
 
-          {/* SECURITY */}
-          <p className="login-footer">
-            <ShieldCheck
-              size={16}
-              style={{ verticalAlign: "middle", marginRight: "6px" }}
-            />
-            Secure authentication powered by Firebase
-          </p>
+          {/* SECURITY MESSAGE */}
+          <div className="login-security">
+            <ShieldCheck size={17} />
 
-        </section>
+            <span>
+              Secure authentication powered by Firebase.
+            </span>
+          </div>
 
-      </main>
+          {/* DISCLAIMER */}
+          <div className="login-help">
+            <p>
+              By continuing, you agree to use this platform
+              responsibly and verify scheme details through
+              official government portals.
+            </p>
+          </div>
 
-    </div>
+        </div>
+
+        {/* FOOTER */}
+        <footer className="login-footer">
+          <span>© 2026 Bharat Sahayak AI</span>
+          <span>Made for Digital India</span>
+        </footer>
+
+      </section>
+
+    </main>
   );
 }
+
+export default Login;

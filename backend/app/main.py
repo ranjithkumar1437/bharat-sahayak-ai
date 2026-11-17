@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers.documents import router as documents_router
 from app.routers.eligibility import router as eligibility_router
 from app.routers.assistant import router as assistant_router
+from app.routers.schemes import router as schemes_router
 
 # Create FastAPI application
 app = FastAPI(
@@ -33,6 +34,7 @@ app.add_middleware(
 app.include_router(documents_router)
 app.include_router(eligibility_router)
 app.include_router(assistant_router)
+app.include_router(schemes_router)
 
 
 # Home endpoint
@@ -57,7 +59,8 @@ def health_check():
             "Document Agent",
             "Eligibility Agent",
             "Application Guide",
-            "AI Assistant"
+            "AI Assistant",
+            "Government Schemes"
         ]
     }
 
@@ -72,6 +75,6 @@ def api_status():
             "documents": "registered",
             "eligibility": "registered",
             "assistant": "registered",
-            "schemes": "not yet implemented"
+            "schemes": "registered"
         }
     }
